@@ -1,0 +1,336 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,top=1.5cm,bottom=1.5cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{titlesec}
+\usepackage{makecell}
+\usepackage{inconsolata}
+\usepackage{tikz}
+\usepackage[inline]{enumitem}
+
+\usepackage{caption, copyrightbox}
+\captionsetup{justification=centering, labelfont=sc, labelsep=endash}
+\usepackage{minted}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\definecolor{blue(pigment)}{rgb}{0.2, 0.2, 0.6}
+\definecolor{blue(ryb)}{rgb}{0.01, 0.28, 1.0}
+\definecolor{brightcerulean}{rgb}{0.11, 0.67, 0.84}
+\definecolor{emerald}{rgb}{0.31, 0.78, 0.47}
+\tikzset {
+        recnode/.style={align=center,inner sep=0pt, rectangle, text width=5cm, draw,thick,minimum width=5cm,minimum height=1cm},
+        default/.style={}
+}
+\usepackage{nicematrix}
+\usepackage{multirow}
+
+\makeatletter
+\@addtoreset{subsection}{section}
+\@addtoreset{subsection}{*section}
+\makeatother
+\def\thesubsection{\arabic{subsection}}
+
+\let\oldsection\section
+\renewcommand{\section}{%
+    \setcounter{subsection}{0}%
+    \oldsection%
+}
+
+
+\title{Computer Networks - HW5}
+\author{Alireza Rostami \\ Student Number: 9832090}
+\date{}
+
+\begin{document}
+    \maketitle
+\part*{Part 1}   
+    \section*{Question 1}
+    With the shadow copy, the forwarding decision is made locally, at each input port, without invoking the centralized routing processor. Such decentralized forwarding avoids creating a forwarding processing bottleneck at a single point within the router.
+
+    \section*{Question 2}
+Route summarization, also known as route aggregation, is a method for aggregating multiple specific routes and summarizing them into a singular route. In this method, the network layer addresses are arranged in a hierarchical fashion and each ISP is assigned a continuous block of IP addresses.
+
+~\\It is useful to perform route aggregation in order to further subnet any addresses and assign them to organization in an organized manner. It reduces the number of routes used to access the network, the size of routing tales, and depletion of routes.
+\section*{Question 3}
+\begin{enumerate}[label=\alph*.]
+    \item No, you can only transmit one packet at a time over a shared bus.
+    \item No, as discussed in the text, only one memory read/write can be done at a time over the shared system bus.
+    \item No, in this case the two packets would have to be sent over the same output bus at the same time, which is not possible. 
+\end{enumerate}
+\section*{Question 4}
+\begin{enumerate}[label=\alph*.]
+    \item eBGP; Router 3c learns about x from eBGP.
+    \item iBGP; Router 3a learns about x from iBGP.
+    \item eBGP; Router 1c learns about x from eBGP.
+    \item iBGP; Router 1d learns about x from iBGP.
+\end{enumerate}
+
+\newpage
+\section*{Question 5} 
+The below table is the computation of shortest path from source $ x $ to all other nodes using the \textsl{Dijkstra's algorithm}.
+
+~\\ Here, 
+    \begin{displaymath}
+        S' = \text{subset of nodes}
+    \end{displaymath}
+    \begin{displaymath}
+        c(i) = \text{Current path of node} \; i
+    \end{displaymath}
+    \begin{displaymath}
+        l(i) = \text{Least cost path of node} \; i
+    \end{displaymath}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+    $S'$ & $l(t), \, c(t)$ & $l(u), \, c(u)$ & $l(v), \, c(v)$ & $l(w), \, c(w)$ & $l(y), \, c(y)$ & $l(z), \, c(z)$ \\ \hline
+    $ \boldsymbol{x} $ & $ \infty $ & $ \infty $ & $3, \, x$ & $6, \, x$ & $6, \, x$ & $8, \, x$ \\
+    \hline
+    $ x\boldsymbol{v} $ & $ 7, \, v $ & $ 6, \, v $ & $ \boldsymbol{3, \, x}$ & $6, \, x$ & $6, \, x$ & $8, \, x$ \\
+    \hline
+    $ xv\boldsymbol{u} $ & $ 7, \, v $ & $ \boldsymbol{6, \, v} $ & $3, \, x$ & $6, \, x$ & $6, \, x$ & $8, \, x$ \\
+    \hline
+    $ xvu\boldsymbol{w} $ & $ 7, \, v $ & $ 6, \, v $ & $3, \, x$ & $\boldsymbol{6, \, x}$ & $6, \, x$ & $8, \, x$ \\
+    \hline
+    $ xvuw\boldsymbol{y} $ & $ 7, \, v $ & $ 6, \, v $ & $3, \, x$ & $6, \, x$ & $\boldsymbol{6, \, x}$ & $8, \, x$ \\
+    \hline
+    $ xvuwy\boldsymbol{t} $ & $ \boldsymbol{7, \, v} $ & $ 6, \, v $ & $3, \, x$ & $6, \, x$ & $\boldsymbol{6, \, x}$ & $8, \, x$ \\
+    \hline
+    $ xvuwyt\boldsymbol{z} $ & $ 7, \, v $ & $ 6, \, v $ & $3, \, x$ & $6, \, x$ & $6, \, x$ & $\boldsymbol{8, \, x}$ \\
+    \hline
+\end{tabular}
+\caption{Table of computation using Dijkstra's algorithm.}
+\end{table}
+Thus, the following are the shortest paths from $ x $ and their costs:
+\begin{table}[h!]
+\centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Destination & Path & Cost \\
+        \hline
+        $t$ & $ x \rightarrow v \rightarrow t $ & $ 7 $ \\
+        \hline
+        $u$ & $ x \rightarrow v \rightarrow u $ & $ 6 $ \\
+        \hline
+        $v$ & $ x \rightarrow v $ & $ 3 $ \\
+        \hline
+        $w$ & $ x \rightarrow w $ & $ 6 $ \\
+        \hline
+        $y$ & $ x \rightarrow y $ & $ 6 $ \\
+        \hline
+        $z$ & $ x \rightarrow z $ & $ 8 $ \\
+        \hline
+    \end{tabular}
+\caption{Table of paths and their costs.}
+\end{table}
+
+\section*{Question 6}
+Distance vector routing algorithm exchanges the information with the neighbors and works asynchronously.
+
+~\\According to the distance vector algorithm, any node $ m $ computes the distance vector using the following formulas:
+\begin{align*} 
+&D_m(m) = 0 \\ 
+&D_m(n) = min\{ c(m,n) + D_n(n),\; c(m,n) + D_o(n) \} \\
+&D_m(o) = min\{ c(m,n) + D_n(o),\; c(m,n) + D_o(o) \}
+\end{align*}
+~\\ Note: \textsl{NA} is used when there is no distance value.
+~\\Constructing the distance vector table for node z from the network diagram, we would get:
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+    \textsl{Node} & $u$ & $v$ & $x$ & $y$ & $z$ \\ \hline
+    $ v $ & \textsl{NA} & \textsl{NA} & \textsl{NA} & \textsl{NA} & \textsl{NA}\\
+    \hline
+    $ x $ & \textsl{NA} & \textsl{NA} & \textsl{NA} & \textsl{NA} & \textsl{NA} \\  
+    \hline
+    $ z $ & \textsl{NA} & $6$ & $2$ & \textsl{NA} & $0$\\   
+    \hline
+\end{tabular}
+\caption{Initial distance vector table.}
+\end{table}
+\newpage
+~\\Now, we update the table with costs of all the neighboring nodes.
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+    \textsl{Node} & $u$ & $v$ & $x$ & $y$ & $z$ \\ \hline
+    $ v $ & $1$ & $0$ & $3$ & \textsl{NA} & $6$ \\
+    \hline
+    $ x $ & \textsl{NA} & $3$ & $0$ & $3$ & $2$ \\  
+    \hline
+    $ z $ & \textsl{NA} & $6$ & $2$ & \textsl{NA} & $0$\\   
+    \hline
+\end{tabular}
+\caption{Updated distance vector table.}
+\end{table}
+
+~\\Now, we update the table with minimum costs using the distance vector routing algorithm.
+~\\Example: $v$ to $y$, two paths are available. $v \rightarrow u \rightarrow y$ and $v \rightarrow x \rightarrow y$ with costs $3$ and $6$ respectively. So, $v \rightarrow u \rightarrow y$  is the path with minimum cost. Hence, we update the table with this value.
+
+~\\We would finally get the following table:
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+    \textsl{Node} & $u$ & $v$ & $x$ & $y$ & $z$ \\ \hline
+    $ v $ & $1$ & $0$ & $3$ & $3$ & $5$ \\
+    \hline
+    $ x $ & $4$ & $3$ & $0$ & $3$ & $2$ \\  
+    \hline
+    $ z $ & $6$ & $5$ & $2$ & $5$ & $0$\\   
+    \hline
+\end{tabular}
+\caption{Final distance vector table.}
+\end{table}
+
+
+\part*{Part 2}
+\section*{Question 1}
+TCP slow start.
+\section*{Question 2}
+Option 4 is the correct answer.
+\section*{Question 3}
+\begin{itemize}
+    \item \textsl{Server}:
+    \begin{itemize}
+        \item divides video file into multiple chunks.
+        \item each chunk stored, encoded at different rates.
+        \item manifest file: provides URLs for different chunks.
+    \end{itemize}
+    \item \textsl{Client}:
+    \begin{itemize}
+        \item periodically measures server to client bandwidth.
+        \item consulting manifest, requests one chunk at a time:
+        \begin{itemize}
+            \item chooses maximum coding rate sustainable given current bandwidth.
+            \item can choose different coding rates at different points in time (depending on available bandwidth at time).
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\section*{Question 4}
+There are three types of switching fabrics:
+\begin{enumerate}
+    \item memory
+    \item bus
+    \item crossbar
+\end{enumerate}
+\section*{Question 5}
+Option 2 is the correct answer. \texttt{POST} is not used in \textsl{HTTP requests}.
+\section*{Question 5}
+\begin{align*}
+    &\text{EstimatedRTT} = (1 - \alpha) * \text{EstimatedRTT} + \alpha * \text{SampleRTT} \\
+    &\text{DevRTT} = (1 - \beta) * \text{DevRTT} + \beta * | \; \text{SampleRTT} -  \text{EstimatedRTT} \; | \\
+    &\text{TimeoutInterval} = \text{EstimatedRTT} + 4 * \text{DevRTT}
+\end{align*}
+
+~\\Initially, EstimatedRTT would be equal to the SampleRTT. Thus, we would get the following table:
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+    \textsl{Segment} & \textsl{SampleRTT} & \textsl{EstimatedRTT} & \textsl{DevRTT} & \textsl{TimeoutInterval} \\ \hline
+    $ 1 $ & $ 50 $ & $ 50 $ & $ 25 $ & $ 150 $ \\
+    \hline
+    $ 2 $ & $ 100 $ & $ 0.8 * 50 + 0.2 * 100 = 60 $ & $ 0.9 * 25 + 0.1 * 40 = 26.5$ & $ 60 + 4 * 26.5 = 166 $ \\
+    \hline
+    $ 3 $ & $ 200 $ & $ 0.8 * 60 + 0.2 * 200 = 88  $ & $0.9 * 26.5 + 0.1 * 112 = 35.05 $ & $ 88 + 4 * 35.05 = 228.2$ \\
+    \hline
+\end{tabular}
+\caption{Computation of TimoutInterval.}
+\end{table}
+\section*{Question 6}
+Option 4 is the correct answer.
+\section*{Question 7}
+Interleaving. \begin{itemize}
+    \item Pros:
+    \begin{enumerate*}[label=(\roman*)]
+        \item If some packet is lost, we still have \textsl{most} of every original chunk.
+        \item No redundancy overhead.
+    \end{enumerate*}
+    \item Cons:
+    \begin{enumerate*}[label=(\roman*)]
+        \item Increased playout delay.
+    \end{enumerate*}
+\end{itemize}
+\section*{Question 8}
+The below table is the computation of shortest path from source $ c $ to all other nodes using the \textsl{Dijkstra's algorithm}.
+
+~\\ Here, 
+    \begin{displaymath}
+        S' = \text{subset of nodes}
+    \end{displaymath}
+    \begin{displaymath}
+        c(i) = \text{Current path of node} \; i
+    \end{displaymath}
+    \begin{displaymath}
+        l(i) = \text{Least cost path of node} \; i
+    \end{displaymath}
+
+\begin{table}[h!]
+\centering
+\scalebox{0.9}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+    $S'$ & $l(A), \, c(A)$ & $l(B), \, c(B)$ & $l(D), \, c(D)$ & $l(E), \, c(E)$ & $l(F), \, c(F)$ & $l(G), \, c(G)$ & $l(H), \, c(H)$ \\ \hline
+    
+    $ C $ & $ \infty $ & $ 7, \, C $ & $\boldsymbol{3, \, C}$ & $\infty$ & $3, \, C$ & $\infty$ & $\infty$ \\
+    \hline
+    
+    $ CD $ & $ \infty $ & $ 7, \, C $ & $ $ & $\infty$ & $\boldsymbol{3, \, C}$ & $\infty$ & $5, D$ \\
+    \hline
+    
+    $ CDF $ & $ \infty $ & $ 7, \, C $ & $ $ & $\boldsymbol{5, \, F}$ & $ $ & $\infty$ & $5, \, D$ \\
+    \hline
+    
+    $ CDFE $ & $ \infty $ & $ 7, \, C $ & $ $ & $ $ & $ $ & $ 6, \, E $ & $\boldsymbol{5, \, D}$ \\
+    \hline
+    
+    $ CDFEH $ & $ \infty $ & $ 7, \, C $ & $ $ & $ $ & $ $ & $ \boldsymbol{6, \, E} $ & $ $ \\
+    \hline
+    
+    $ CDFEHG $ & $ 12, \, G $ & $ \boldsymbol{7, \, C} $ & $ $ & $ $ & $ $ & $ $ & $ $ \\
+    \hline
+    
+    $ CDFEHGB  $ & $ \boldsymbol{9, \, B} $ & $   $ & $ $ & $ $ & $ $ & $  $ & $ $ \\
+    \hline
+    
+    $ CDFEHGBA $ & $ $ & $ $ & $ $ & $ $ & $ $ & $ $ & $ $ \\
+    \hline
+
+\end{tabular}
+}
+\caption{Table of computation using Dijkstra's algorithm.}
+\end{table}
+Thus, the shortest path from $C$ to $G$ is $ C \rightarrow F \rightarrow E \rightarrow G $ with the cost $ 6 $.
+\section*{Question 9}
+Assumptions:
+\begin{align*}
+    &\text{avg object size}= 100K \; \text{bits} \\
+    &\text{avg request rate from browsers to origin servers} = 20 \; \text{req} / \text{sec} \\
+    &\text{avg data rate to browsers} = 100K \; \text{bits} \; * \; 20 \; \text{req} / \text{sec} = 2 \; \text{Mbps} \\
+    &\text{RTT from institutional router to any origin server} =  2 \; \text{sec} \\
+    &\text{cache hit ratio} = 0.3 \\
+    &\text{access link rate} = 1.2 \; \text{Mbps}
+\end{align*}
+Thus: 
+\subsection*{A.}
+    70\% of requests use access link. 
+    ~\\Data rate to browsers over access link $= 0.7 \; * 2 \; \text{Mbps} = 1.4 \; \text{Mbps} $.
+    ~\\$ \text{Utilization}_{\text{access link}} = 1.4 \; / 1.2 = 1.16 > 1 $. Thus, the access link cannot satisfy the requests, therefore, we need a fatser access link.
+\subsection*{B.}
+~\\$ \text{Total delay} = 0.7 \; * \text{(delay from origin servers)} +  \; 0.3 \; * \text{(delay when satisfied at cache)} = 0.7 * 2 + 0.3 * (\sim 0.001) = 1.4003 \; \text{secs} $.
+\section*{Question 10}
+If no advertisement heard after $180$ seconds, then neighbor/link is declared dead.
+\section*{Question 11}
+Hierarchical OSPF divides the network into two levels: \begin{enumerate*}
+\item local area, \item backbone. \end{enumerate*}
+
+
+
+\end{document}
