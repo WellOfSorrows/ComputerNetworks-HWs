@@ -1,0 +1,104 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,top=1.5cm,bottom=1.5cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\usepackage{makecell}
+\usepackage{inconsolata}
+\usepackage{tikz}
+\usepackage{caption, copyrightbox}
+\captionsetup{justification=centering, labelfont=sc, labelsep=endash}
+\usepackage{minted}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\definecolor{blue(pigment)}{rgb}{0.2, 0.2, 0.6}
+\definecolor{blue(ryb)}{rgb}{0.01, 0.28, 1.0}
+\definecolor{brightcerulean}{rgb}{0.11, 0.67, 0.84}
+\definecolor{emerald}{rgb}{0.31, 0.78, 0.47}
+\tikzset {
+        recnode/.style={align=center,inner sep=0pt, rectangle, text width=5cm, draw,thick,minimum width=5cm,minimum height=1cm},
+        default/.style={}
+}
+\usepackage{nicematrix}
+\usepackage{multirow}
+
+\makeatletter
+\@addtoreset{subsection}{section}
+\@addtoreset{subsection}{*section}
+\makeatother
+\def\thesubsection{\arabic{subsection}}
+
+\let\oldsection\section
+\renewcommand{\section}{%
+    \setcounter{subsection}{0}%
+    \oldsection%
+}
+
+
+\title{Computer Networks - HW4}
+\author{Alireza Rostami \\ Student Number: 9832090}
+\date{}
+
+\begin{document}
+    \maketitle
+    
+    \section*{Question 1}
+    The process which initiates the communication is the \textsl{client}; the process that waits to be contacted is the \textsl{server}.
+
+    \section*{Question 2}
+    No. In a P2P file-sharing application, the peer that is receiving a file is typically the client and the peer that is sending the file is typically the server. Therefore, the statement is false.
+    
+    \section*{Question 3}
+    We would use UDP.
+    
+   ~\\With UDP, the transaction can be completed in one \textsl{roundtrip time} (RTT) - the client sends the transaction request into a UDP socket, and the server sends the reply back to the client's UDP socket.
+    
+    ~\\With TCP, a minimum of two RTTs are needed - one to set up the TCP connection, and another for the client to send the request and for the server to send back the reply. 
+    
+    \section*{Question 4}
+    Regarding the first part of the question, SSL operates at the application layer. The SSL socket takes unencrypted data from the application layer, encrypts it and then passes it to the TCP socket. 
+    
+    ~\\Regarding the second part of the question, if the application developer wants TCP to be enhanced with SSL, they have to include the SSL code in the their application.
+
+    \section*{Question 5}
+    TCP provides all application data be received in the correct order and without gaps, but UDP does not. So, HTTP, FTP, SMTP, and POP3 run on top of TCP rather than on UDP.
+
+
+    \section*{Question 6} 
+    Web caching can bring the desired content "closer" to the user. 
+    
+    ~\\Web caching is a network entity used for satisfying the client request without involving origin web server. Hence, we can reduce the delay in receiving a requested object, since it does not involve the origin server again and again. 
+    
+    ~\\Web caching can reduce the delay for all objects, even objects that are not cached, since caching reduces the traffic on links.
+
+
+
+    \section*{Question 7}
+    Message is sent from Alice's host to her mail server over HTTP. Alice's mail server then sends the message to Bob's mail server over SMTP. Bob then transfers the message from his mail server to his host over POP3.
+
+    \section*{Question 8}
+    \begin{description}
+        \item[\textsl{Download and delete}] downloads the message from the server to the local mail reader program, and then deletes the message from the server; the only copy of the message is now on your local computer.
+        
+        \item[\textsl{Download and keep}] downloads the message from the server to the local mail reader, and does not delete the message from the server; the message exists on the server as well as the local computer.
+    \end{description}
+    
+    \section*{Question 9}
+    \begin{enumerate}[label=\alph*]
+        \item In the page 44, 8.1.2 Overall Operation stated that for HTTP 1.1, persistent connections are the default behavior of any HTTP connection. That is, unless otherwise indicated, the client SHOULD assume that the server will maintain a persistent connection, even after error responses from the server.
+        ~\\The closing of a connection can be initiated by either the client or the server using the connection header field. In order for the client to close the connection, the connection header must include the connection‐token, “close” in the request. If the server wishes to close the connection, it must include the same “close” token in the connection header along with its response. This connection header is the last request for that connection. Both the client and server can close a connection.
+        
+        \item There are no encryption services provided by HTTP.
+        
+        \item Yes, a client can open three or more simultaneous connections with a given server, although the suggested number of concurrent persistent connections is two.
+        
+        \item Closing the connection by one side is possible while the other side is transmitting. This is because HTTP is stateless and therefore neither party knows the others state.  
+
+    \end{enumerate}
+
+\end{document}
